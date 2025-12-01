@@ -1,0 +1,31 @@
+name: Self-Hosted Runner Smoke Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-runner:
+    runs-on: [self-hosted, YOUR_RUNNER_LABEL]   # <--- replace this
+
+    steps:
+      - name: Print basic info
+        run: |
+          echo "Hello from self-hosted runner!"
+          echo "Hostname: $(hostname)"
+          echo "User: $(whoami)"
+          echo "Date: $(date)"
+
+      - name: Check GPU (optional)
+        run: |
+          nvidia-smi || echo "No NVIDIA GPU / command not available"
+          rocm-smi || echo "No ROCm GPU / command not available"
+
+      - name: Check Docker
+        run: |
+          docker ps
+          docker run --rm hello-world || echo "Docker run failed"
+
+      - name: Verify workspace
+        run: |
+          echo "Repo files available:"
+          ls -al
