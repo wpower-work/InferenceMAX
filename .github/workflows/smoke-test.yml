@@ -5,7 +5,7 @@ on:
 
 jobs:
   check-runner:
-    runs-on: [self-hosted, bm-gnr-gaudi3-smc-01]   # <--- replace this
+    runs-on: [self-hosted, self-hosted]   # <--- replace this
 
     steps:
       - name: Print basic info
