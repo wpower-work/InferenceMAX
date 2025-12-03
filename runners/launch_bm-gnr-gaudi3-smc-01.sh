@@ -7,6 +7,9 @@ PORT=8888
 
 server_name="gaudi-test-server"
 
+git clone https://github.com/HabanaAI/vllm-fork.git
+cd vllm-fork/.cd/
+
 set -x
 docker run --rm --ipc=host --shm-size=16g --network=host --name=$server_name \
 --privileged --cap-add=sys_nice --runtime=habana  --device=/dev/kfd --device=/dev/dri --device=/dev/mem \
