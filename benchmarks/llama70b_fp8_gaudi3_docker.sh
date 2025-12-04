@@ -30,8 +30,10 @@ chmod 755 vll
 ls -lrt
 cat vll
 
+
+
 set -x
-vll serve $MODEL --port $PORT \
+./vll serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
 --max-model-len $MAX_MODEL_LEN \
