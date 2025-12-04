@@ -23,8 +23,19 @@ export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
 
+cat > vll << EOF
+#!/usr/bin/python
+import sys
+from vllm.entrypoints.cli.main import main
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(main())
+EOF
+chmod 755 vll
+
 set -x
-vllm serve $MODEL --port $PORT \
+vll serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
 --max-model-len $MAX_MODEL_LEN \
