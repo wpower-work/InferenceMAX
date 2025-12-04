@@ -37,8 +37,20 @@ chmod 755 vll
 ls -lrt
 cat vll
 
+# Directory that this script lives in
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Repo root is one level up from benchmarks/
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Path to the vll wrapper
+VLL_BIN="${REPO_ROOT}/vll"
+
+echo "Using VLL_BIN=${VLL_BIN}"
+
+
 set -x
-../vll serve $MODEL --port $PORT \
+"${VLL_BIN}" serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
 --max-model-len $MAX_MODEL_LEN \
