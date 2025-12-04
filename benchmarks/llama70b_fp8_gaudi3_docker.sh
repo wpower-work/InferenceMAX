@@ -42,7 +42,6 @@ set -x
 --gpu-memory-utilization 0.95 \
 --max-model-len $MAX_MODEL_LEN \
 --max-seq-len-to-capture $MAX_MODEL_LEN \
---config config.yaml \
 --block-size=64 \
 --no-enable-prefix-caching \
 --disable-log-requests \
