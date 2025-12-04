@@ -23,6 +23,8 @@ export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
 
+cd /workspace/
+
 cat > vll << EOF
 #!/usr/bin/python
 import sys
