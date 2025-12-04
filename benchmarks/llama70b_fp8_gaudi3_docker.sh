@@ -34,6 +34,9 @@ if __name__ == '__main__':
 EOF
 chmod 755 vll
 
+ls -lrt
+cat vll
+
 set -x
 vll serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
