@@ -60,4 +60,4 @@ run_benchmark_serving \
     --num-prompts 1 \
     --max-concurrency "$CONC" \
     --result-filename "$RESULT_FILENAME" \
-    --result-dir /workspace/
+    --result-dir /gitworkspace/
