@@ -1,7 +1,7 @@
-gptoss-fp8-g3-vllm:
+llama-fp8-gaudi3-vllm:
   image: vllm/vllm-openai:v0.11.0
-  model: openai/gpt-oss-120b
-  model-prefix: gptoss
+  model: meta-llama/Llama-3.1-70B
+  model-prefix: llama
   runner: gaudi3
   precision: fp8
   framework: vllm
