@@ -54,7 +54,7 @@ if mtp_mode:  # MTP
 for key, value in bmk_result.items():
     if key.endswith('ms'):
         data[key.replace('_ms', '')] = float(value) / 1000.0
-    if 'tpot' in key:
+    if 'tpot' in key and value > 0:
         data[key.replace('_ms', '').replace('tpot', 'intvty')] = 1000.0 / float(value)
 
 print(json.dumps(data, indent=2))
