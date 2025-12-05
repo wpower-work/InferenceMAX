@@ -328,6 +328,7 @@ def generate_full_sweep(args, all_config_data):
             error_msg += f" seq-lens={args.seq_lens}"
         raise ValueError(error_msg)
 
+    print(matrix_values)
     return matrix_values
 
 
