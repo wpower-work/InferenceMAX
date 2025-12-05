@@ -1,5 +1,5 @@
 llama-fp8-gaudi3-vllm:
-  image: vllm/vllm-openai:v0.11.0
+  image: vault.habana.ai/gaudi-docker/1.22.2/ubuntu22.04/habanalabs/vllm-installer-2.7.1:latest
   model: meta-llama/Llama-3.1-70B
   model-prefix: llama
   runner: gaudi3
