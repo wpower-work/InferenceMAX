@@ -56,5 +56,5 @@ mi355x:
 - 'mi355x-amd_5'
 gb200:
 - gb200-nv_0
-gaudi:
+gaudi3:
 - 'gaudi3-intel_0'
