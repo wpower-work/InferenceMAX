@@ -57,4 +57,4 @@ mi355x:
 gb200:
 - gb200-nv_0
 gaudi3:
-- gaudi3-intel_0
+- 'gaudi3-intel_0'
