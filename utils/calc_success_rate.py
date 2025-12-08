@@ -6,7 +6,7 @@ from enum import Enum
 
 from github import Auth, Github
 
-GPU_SKUS = ["h100", "h200", "gb200", "mi300x", "mi325x", "mi355x", "b200"]
+GPU_SKUS = ["h100", "h200", "gb200", "mi300x", "mi325x", "mi355x", "b200", "gaudi3"]
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 RUN_ID = os.environ.get("GITHUB_RUN_ID")
 REPO_NAME = os.environ.get("GITHUB_REPOSITORY")
