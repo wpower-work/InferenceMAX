@@ -1,4 +1,4 @@
-dsr1-fp8-h200-sglang:
+dsr1-fp8-gaudi3-sglang:
   image: sglang-gaudi:latest
   model: deepseek-ai/DeepSeek-R1-0528
   model-prefix: dsr1
