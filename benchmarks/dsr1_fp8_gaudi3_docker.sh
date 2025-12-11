@@ -7,23 +7,40 @@
 # CONC
 # ISL
 # OSL
+# MAX_MODEL_LEN
 # RANDOM_RANGE_RATIO
 # RESULT_FILENAME
+# NUM_PROMPTS
+
+export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
 
-python3 -m sglang.launch_server \
-    --model-path $MODEL \
-    --host=0.0.0.0 \
-    --port $PORT \
-    --tensor-parallel-size $TP \
-    --trust-remote-code \
-    --chunked-prefill-size 196608 \
-    --mem-fraction-static 0.8 --disable-radix-cache \
-    --num-continuous-decode-steps 4 \
-    --max-prefill-tokens 196608 \
-    --cuda-graph-max-bs 128 > $SERVER_LOG 2>&1 &
+cat > vll << EOF
+#!/usr/bin/python
+import sys
+from vllm.entrypoints.cli.main import main
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(main())
+EOF
+chmod 755 vll
 
+ls -lrt
+cat vll
+
+
+
+set -x
+./vll serve $MODEL --port $PORT \
+--tensor-parallel-size=$TP \
+--gpu-memory-utilization 0.95 \
+--max-model-len $MAX_MODEL_LEN \
+--max-seq-len-to-capture $MAX_MODEL_LEN \
+--block-size=64 \
+--no-enable-prefix-caching \
+--disable-log-requests > $SERVER_LOG 2>&1 &
 
 SERVER_PID=$!
 
@@ -33,16 +50,6 @@ source "$(dirname "$0")/benchmark_lib.sh"
 # Wait for server to be ready
 wait_for_server_ready --port "$PORT" --server-log "$SERVER_LOG" --server-pid "$SERVER_PID"
 
-if [[ "$MODEL" == "amd/DeepSeek-R1-0528-MXFP4-Preview" || "$MODEL" == "deepseek-ai/DeepSeek-R1-0528" ]]; then
-  if [[ "$OSL" == "8192" ]]; then
-    NUM_PROMPTS=$(( CONC * 20 ))
-  else
-    NUM_PROMPTS=$(( CONC * 50 ))
-  fi
-else
-  NUM_PROMPTS=$(( CONC * 10 ))
-fi
-
 run_benchmark_serving \
     --model "$MODEL" \
     --port "$PORT" \
@@ -50,7 +57,7 @@ run_benchmark_serving \
     --input-len "$ISL" \
     --output-len "$OSL" \
     --random-range-ratio "$RANDOM_RANGE_RATIO" \
-    --num-prompts "$NUM_PROMPTS" \
+    --num-prompts $(( $CONC * 10 )) \
     --max-concurrency "$CONC" \
     --result-filename "$RESULT_FILENAME" \
-    --result-dir /workspace/
+    --result-dir /gitworkspace/
