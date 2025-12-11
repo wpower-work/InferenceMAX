@@ -1,10 +1,10 @@
-dsr1-fp8-gaudi3-sglang:
-  image: sglang-gaudi:latest
+dsr1-fp8-gaudi3-vllm:
+  image: vault.habana.ai/gaudi-docker/1.22.2/ubuntu22.04/habanalabs/vllm-installer-2.7.1:latest
   model: deepseek-ai/DeepSeek-R1-0528
   model-prefix: dsr1
   runner: gaudi3
   precision: fp8
-  framework: sglang
+  framework: vllm
   seq-len-configs:
   - isl: 1024
     osl: 1024
