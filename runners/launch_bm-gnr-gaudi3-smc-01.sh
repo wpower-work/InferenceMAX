@@ -9,7 +9,7 @@ server_name="gaudi-test-server"
 
 set -x
 docker run --rm --ipc=host --shm-size=16g --network=host --name=$server_name \
---privileged --cap-add=sys_nice --runtime=habana  --device=/dev/kfd --device=/dev/dri --device=/dev/mem \
+--privileged --cap-add=sys_nice --runtime=habana \
 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 -v $HF_HUB_CACHE_MOUNT:$HF_HUB_CACHE \
 -v $GITHUB_WORKSPACE:/gitworkspace/ -w /workspace/vllm/ \
