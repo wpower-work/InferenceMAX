@@ -40,6 +40,7 @@ set -x
 --max-seq-len-to-capture $MAX_MODEL_LEN \
 --block-size=64 \
 --no-enable-prefix-caching \
+--enable-expert-parallel   \
   > $SERVER_LOG 2>&1 &
 
 SERVER_PID=$!
