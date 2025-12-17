@@ -9,15 +9,15 @@ dsr1-fp8-gaudi3-vllm:
   - isl: 1024
     osl: 1024
     search-space:
-    - { tp: 8, conc-start: 4, conc-end: 4 }
+    - { tp: 8, conc-start: 4, conc-end: 64 }
   - isl: 1024
     osl: 8192
     search-space:
-    - { tp: 8, conc-start: 4, conc-end: 4 }
+    - { tp: 8, conc-start: 4, conc-end: 64 }
   - isl: 8192
     osl: 1024
     search-space:
-    - { tp: 8, conc-start: 4, conc-end: 4 }
+    - { tp: 8, conc-start: 4, conc-end: 64 }
     
 llama-fp8-gaudi3-vllm:
   image: vault.habana.ai/gaudi-docker/1.22.2/ubuntu22.04/habanalabs/vllm-installer-2.7.1:latest
