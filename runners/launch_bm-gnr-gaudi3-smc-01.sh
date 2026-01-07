@@ -16,7 +16,6 @@ docker run --rm --ipc=host --shm-size=16g --network=host --name=$server_name \
 -e HF_TOKEN -e HF_HUB_CACHE -e MODEL -e TP -e CONC -e MAX_MODEL_LEN -e PORT=$PORT \
 -e ISL -e OSL -e PYTHONPYCACHEPREFIX=/tmp/pycache/ -e RANDOM_RANGE_RATIO -e RESULT_FILENAME \
 -e HABANA_VISIBLE_DEVICES=all \
--e VLLM_SKIP_WARMUP=true \
 --entrypoint=/bin/bash \
 $IMAGE \
 /gitworkspace/benchmarks/"${EXP_NAME%%_*}_${PRECISION}_gaudi3_docker.sh"
