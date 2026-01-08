@@ -42,7 +42,7 @@ dsr1-fp8-gaudi3-vllm:
     
 gptoss-fp4-gaudi3-vllm:
   image: vault.habana.ai/gaudi-docker/1.21.3/ubuntu22.04/habanalabs/pytorch-installer-2.6.0:latest
-  model: openai/gpt-oss-120b
+  model: unsloth/gpt-oss-20b-BF16
   model-prefix: gptoss
   runner: gaudi3
   precision: fp4
