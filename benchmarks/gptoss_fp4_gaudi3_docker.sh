@@ -16,20 +16,8 @@ export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
 
-cat > vll << EOF
-#!/usr/bin/python
-import sys
-from vllm.entrypoints.cli.main import main
-if __name__ == '__main__':
-    if sys.argv[0].endswith('.exe'):
-        sys.argv[0] = sys.argv[0][:-4]
-    sys.exit(main())
-EOF
-chmod 755 vll
-
-ls -lrt
-cat vll
-
+cd /workspace
+git clone https://github.com/HabanaAI/vllm-fork.git
 cd vllm-fork
 git fetch origin pull/1723/head:pr-1723
 git checkout pr-1723
@@ -37,16 +25,35 @@ pip install -r requirements-hpu.txt
 python setup.py develop
 pip install datasets
 
+export EXPERIMENTAL_WEIGHT_SHARING=0
+export PT_HPU_LAZY_MODE=1
+export VLLM_DECODE_BLOCK_BUCKET_MAX=2304
+export VLLM_DECODE_BLOCK_BUCKET_STEP=256
+export VLLM_DECODE_BS_BUCKET_STEP=32
+export VLLM_DELAYED_SAMPLING=true
+export VLLM_GRAPH_PROMPT_RATIO=0.2
+export VLLM_GRAPH_RESERVED_MEM=0.04
+export VLLM_PROMPT_BS_BUCKET_STEP=32
+export VLLM_PROMPT_SEQ_BUCKET_MAX=4352
+export VLLM_PROMPT_SEQ_BUCKET_STEP=256
+export VLLM_SKIP_WARMUP=false
+
 set -x
-./vll serve $MODEL --port $PORT \
---tensor-parallel-size=$TP \
---gpu-memory-utilization 0.95 \
---max-model-len $MAX_MODEL_LEN \
---max-seq-len-to-capture $MAX_MODEL_LEN \
---block-size=64 \
---no-enable-prefix-caching \
---enable-expert-parallel   \
-  > $SERVER_LOG 2>&1 &
+
+python -m vllm.entrypoints.openai.api_server \
+  --port $PORT \
+  --model $MODEL \
+  --block-size 128 \
+  --dtype bfloat16 \
+  --tensor-parallel-size=$TP \
+  --max-model-len $MAX_MODEL_LEN  \
+  --gpu-memory-util 0.95 \
+  --use-padding-aware-scheduling \
+  --max-num-seqs 192 \
+  --max-num-prefill-seqs 16 \
+  --num_scheduler_steps 1 \
+  --no-enable-prefix-caching \
+  --disable-log-requests > $SERVER_LOG 2>&1 &
 
 SERVER_PID=$!
 
