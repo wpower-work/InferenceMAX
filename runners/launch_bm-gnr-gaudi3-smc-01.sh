@@ -18,4 +18,4 @@ docker run --rm --ipc=host --shm-size=16g --network=host --name=$server_name \
 -e HABANA_VISIBLE_DEVICES=all \
 --entrypoint=/bin/bash \
 $IMAGE \
-/gitworkspace/benchmarks/"${EXP_NAME%%_*}_${PRECISION}_gaudi3_docker.sh"
+/workspace/benchmarks/"${EXP_NAME%%_*}_${PRECISION}_gaudi3_docker.sh"
