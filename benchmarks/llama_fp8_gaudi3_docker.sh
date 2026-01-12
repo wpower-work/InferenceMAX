@@ -15,32 +15,18 @@
 export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
-
-cat > vll << EOF
-#!/usr/bin/python
-import sys
-from vllm.entrypoints.cli.main import main
-if __name__ == '__main__':
-    if sys.argv[0].endswith('.exe'):
-        sys.argv[0] = sys.argv[0][:-4]
-    sys.exit(main())
-EOF
-chmod 755 vll
-
-ls -lrt
-cat vll
-
-
-
+ 
 set -x
-./vll serve $MODEL --port $PORT \
+
+./vllm serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
 --max-model-len $MAX_MODEL_LEN \
 --max-seq-len-to-capture $MAX_MODEL_LEN \
 --block-size=64 \
 --no-enable-prefix-caching \
---disable-log-requests > $SERVER_LOG 2>&1 &
+--enable-expert-parallel   \
+  > $SERVER_LOG 2>&1 &
 
 SERVER_PID=$!
 
@@ -60,4 +46,4 @@ run_benchmark_serving \
     --num-prompts $(( $CONC * 10 )) \
     --max-concurrency "$CONC" \
     --result-filename "$RESULT_FILENAME" \
-    --result-dir /gitworkspace/
+    --result-dir /workspace/
