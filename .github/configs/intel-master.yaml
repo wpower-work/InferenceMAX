@@ -1,5 +1,5 @@
 dsr1-fp8-gaudi3-vllm-ep:
-  image: vault.habana.ai/gaudi-docker/1.22.2/ubuntu22.04/habanalabs/vllm-installer-2.7.1:latest
+  image: infmax-gaudi:latest
   model: deepseek-ai/DeepSeek-R1-0528
   model-prefix: dsr1
   runner: gaudi3
