@@ -17,8 +17,6 @@ export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
  
 set -x
-ls -lrt 
-pwd
 
 ./vllm serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
