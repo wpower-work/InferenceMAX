@@ -15,9 +15,10 @@
 export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 
 SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
- ls -lrt
  
 set -x
+ls -lrt 
+
 ./vllm serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
