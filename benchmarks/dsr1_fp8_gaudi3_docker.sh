@@ -18,6 +18,7 @@ SERVER_LOG=$(mktemp /tmp/server-XXXXXX.log)
  
 set -x
 ls -lrt 
+pwd
 
 ./vllm serve $MODEL --port $PORT \
 --tensor-parallel-size=$TP \
