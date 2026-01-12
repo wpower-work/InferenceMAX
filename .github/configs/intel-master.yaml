@@ -41,7 +41,7 @@ dsr1-fp8-gaudi3-vllm:
     - { tp: 8, conc-start: 4, conc-end: 64 }
     
 gptoss-fp4-gaudi3-vllm:
-  image: vault.habana.ai/gaudi-docker/1.21.3/ubuntu22.04/habanalabs/pytorch-installer-2.6.0:latest
+  image: infmax-gaudi:latest
   model: unsloth/gpt-oss-20b-BF16
   model-prefix: gptoss
   runner: gaudi3
@@ -71,7 +71,7 @@ gptoss-fp4-gaudi3-vllm:
     - { tp: 8, conc-start: 4, conc-end: 4 }
     
 llama-fp8-gaudi3-vllm:
-  image: vault.habana.ai/gaudi-docker/1.22.2/ubuntu22.04/habanalabs/vllm-installer-2.7.1:latest
+  image: infmax-gaudi:latest
   model: meta-llama/Llama-3.1-70B
   model-prefix: llama
   runner: gaudi3
