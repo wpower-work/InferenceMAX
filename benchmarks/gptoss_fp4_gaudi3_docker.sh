@@ -22,7 +22,7 @@ set -x
 --tensor-parallel-size=$TP \
 --gpu-memory-utilization 0.95 \
 --max-model-len 10240 \
---max-seq-len-to-capture $MAX_MODEL_LEN \
+--max-seq-len-to-capture 5760 \
 --block-size=64 \
 --no-enable-prefix-caching \
   > $SERVER_LOG 2>&1 &
