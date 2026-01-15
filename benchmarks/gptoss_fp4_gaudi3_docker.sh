@@ -23,6 +23,7 @@ set -x
 --gpu-memory-utilization 0.95 \
 --max-model-len 10240 \
 --max-seq-len-to-capture 4096 \
+--max-num-batched-tokens 4096 \
 --block-size=64 \
 --no-enable-prefix-caching \
   > $SERVER_LOG 2>&1 &
